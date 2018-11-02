@@ -1,7 +1,7 @@
 import Discord from 'discord.js';
 import fs from 'fs';
 
-const processClient = config => {
+const processClient = token => {
   const client = new Discord.Client();
   const controllerFiles = fs.readdirSync('../src/controllers');
   client.controllers = new Discord.Collection();
@@ -12,7 +12,7 @@ const processClient = config => {
   }
 
   // Initialise DogeBot using config token
-  client.login(config.token).catch(error => console.log(`Failed: ${error}`));
+  client.login(token).catch(error => console.log(`Failed: ${error}`));
 
   return client;
 };

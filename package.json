@@ -5,6 +5,7 @@
   "main": "src/app.js",
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "discord.js": "^11.3.0",
     "ffmpeg": "^0.0.4",
     "ffmpeg-binaries": "^3.2.2-3",
