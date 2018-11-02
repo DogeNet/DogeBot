@@ -1,18 +1,10 @@
 // Setup modules required for DogeBot
-import Discord from 'discord.js';
-import fs from 'fs';
+
 import { config } from './config';
+import { processClient } from './client-processor';
 
 // Instantiate client and process controller files to be used later on with commands
-const client = processClient();
-
-// Initialise DogeBot using config token
-client
-  .login(config.token)
-  .then(data => {
-    console.log(`Success ${data}`);
-  })
-  .catch(error => console.log(`Failure ${error}`));
+const client = processClient(config);
 
 // The ready event - once triggered the bot is then operational for use
 client.on('ready', () => {
@@ -41,15 +33,3 @@ client.on('message', message => {
   // Execute the required controller passing in the user message
   controller.execute(message, args);
 });
-
-function processClient() {
-  const client = new Discord.Client();
-  const controllerFiles = fs.readdirSync('../src/controllers');
-  client.controllers = new Discord.Collection();
-
-  for (let file of controllerFiles) {
-    let controller = require(`./controllers/${file}`);
-    client.controllers.set(controller.name, controller);
-  }
-  return client;
-}
