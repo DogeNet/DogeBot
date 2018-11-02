@@ -61,3 +61,4 @@ typings/
 .next
 src/config.1.js
 src/config.js
+ref.js

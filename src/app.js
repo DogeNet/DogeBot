@@ -13,6 +13,8 @@ doge.client.on('message', message => {
   let response = doge.messageHandler(doge.client, message);
 
   if (response === null) return;
+
+  let { controller, msgProcessed, msgArgs } = response;
   // Execute the required controller passing in the user message
-  response.controller.execute(response.message, response.args);
+  controller.execute(msgProcessed, msgArgs);
 });

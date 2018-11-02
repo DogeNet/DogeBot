@@ -1,7 +1,6 @@
 import { config } from './config';
 
 const messageHandler = (client, message) => {
-  console.log('hello from message handler');
   // Check for user command usage with the required prefix
   if (!message.content.startsWith(config.prefix) || message.author.bot) return null;
 
@@ -19,8 +18,8 @@ const messageHandler = (client, message) => {
   // Build an object with our processed desired controller, message and arguments to return
   let response = {
     controller: controller,
-    message: message,
-    arguments: args
+    msgProcessed: message,
+    msgArgs: args
   };
 
   return response;
