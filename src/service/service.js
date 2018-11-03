@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { apiPoints } from './endpoints';
 
-const baseUrl = 'https://jsonplaceholder.typicode.com';
+const baseUrl = apiPoints.baseUrl
 
 export default class DogeService {
   async doGet(url, params) {

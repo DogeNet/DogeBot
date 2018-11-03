@@ -1,4 +1,4 @@
-import { config } from './config';
+import { config } from '../config';
 
 const messageHandler = (client, message) => {
   // Check for user command usage with the required prefix

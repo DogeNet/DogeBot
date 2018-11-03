@@ -16,5 +16,5 @@ doge.client.on('message', message => {
 
   let { controller, msgProcessed, msgArgs } = response;
   // Execute the required controller passing in the user message
-  controller.execute(msgProcessed, msgArgs);
+  controller.execute(msgProcessed, msgArgs, doge.dogeService);
 });

@@ -15,7 +15,7 @@ const processControllers = client => {
   client.controllers = new Discord.Collection();
 
   for (let file of controllerFiles) {
-    let controller = require(`./controllers/${file}`);
+    let controller = require(`../controllers/${file}`);
     client.controllers.set(controller.name, controller);
   }
 };
