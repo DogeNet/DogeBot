@@ -10,6 +10,7 @@
     "ffmpeg": "^0.0.4",
     "ffmpeg-binaries": "^3.2.2-3",
     "net": "^1.0.2",
+    "npm": "^6.4.1",
     "opusscript": "^0.0.6",
     "socket.io": "^2.1.0",
     "ytdl-core": "^0.20.1"

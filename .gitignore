@@ -63,3 +63,6 @@ src/config.1.js
 src/config.js
 ref.js
 src/service/endpoints.js
+/dist
+dist/bot.js
+dist/app.js
