@@ -5,19 +5,26 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.DogeBot = undefined;
 
-var _messageHandler = require('./message-handler');
+var _messageHandler = require('./processors/message-handler');
 
-var _clientProcessor = require('./client-processor');
+var _clientProcessor = require('./processors/client-processor');
 
 var _config = require('./config');
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _userService = require('./service/user-service');
 
-var DogeBot = function DogeBot() {
-  _classCallCheck(this, DogeBot);
+var _userService2 = _interopRequireDefault(_userService);
 
-  this.client = (0, _clientProcessor.processClient)(_config.config.token);
-  this.messageHandler = _messageHandler.messageHandler;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const DogeBot = class DogeBot {
+  constructor() {
+    this.client = (0, _clientProcessor.processClient)(_config.config.token);
+    this.messageHandler = _messageHandler.messageHandler;
+    this.services = {
+      users: new _userService2.default()
+    };
+  }
 };
 
 exports.DogeBot = DogeBot;
