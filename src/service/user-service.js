@@ -1,7 +1,7 @@
-import DogeService from './service-base';
+import BaseService from './service-base';
 import { apiPoints } from './endpoints';
 
-export default class UserService extends DogeService {
+export default class UserService extends BaseService {
   getUserList = async () => {
     return await this.doGet(apiPoints.users)
       .then(result => {

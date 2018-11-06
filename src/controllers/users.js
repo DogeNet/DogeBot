@@ -1,10 +1,9 @@
+import { validateUserControllerInput, validateUserControllerParams } from '../utils/validation-util';
 module.exports = {
   name: 'users',
   description: 'Returns the server members',
   execute(message, args, doge) {
-    if (args.length <= 0 && args.length > 1) {
-      return;
-    }
+    if (!validateUserControllerInput(args)) return;
 
     let command = args[0].toLowerCase();
     let username = args[1];
@@ -23,6 +22,11 @@ module.exports = {
         break;
 
       case 'profile':
+        if (!validateUserControllerParams(args)) {
+          message.channel.send('```> Please user the following format: !users profile <username>```');
+          return;
+        }
+
         doge.services.users
           .getUserProfile(username)
           .then(response => {
@@ -34,6 +38,11 @@ module.exports = {
         break;
 
       case 'create':
+        if (!validateUserControllerParams(args)) {
+          message.channel.send('```> Please user the following format: !users create <username>```');
+          return;
+        }
+
         doge.services.users
           .createUserProfile(username)
           .then(response => {
@@ -44,7 +53,7 @@ module.exports = {
         break;
 
       default:
-        message.channel.send(```!users list || !users profile <username> || !users create <username>```);
+        message.channel.send('```> !users list || !users profile <username> || !users create <username>```');
         break;
     }
   }
