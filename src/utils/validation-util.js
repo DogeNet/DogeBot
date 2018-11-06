@@ -12,7 +12,7 @@ const validateUserControllerInput = args => {
   if (args.length < 1 || args.length > 2) {
     return false;
   }
-  return true
+  return true;
 };
 
-export {validateUserControllerInput, validateUserControllerParams}
+export { validateUserControllerInput, validateUserControllerParams };
