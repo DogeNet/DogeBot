@@ -3,7 +3,7 @@ import { apiPoints } from './endpoints';
 
 const baseUrl = apiPoints.baseUrl;
 
-export default class DogeService {
+export default class BaseService {
   async doGet(url, urlParam) {
     let paramStr = '';
     if (urlParam != null) {
