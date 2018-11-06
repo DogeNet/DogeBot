@@ -4,16 +4,14 @@ import { apiPoints } from './endpoints';
 const baseUrl = apiPoints.baseUrl;
 
 export default class DogeService {
-  async doGet(url, params = '') {
-    return await axios
-      .get(`${baseUrl}${url}`, {
-        params: {
-          params
-        }
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+  async doGet(url, urlParam) {
+    let paramStr = '';
+    if (urlParam != null) {
+      paramStr = `/${urlParam}`;
+    }
+    return await axios.get(`${baseUrl}${url}${paramStr}`).catch(function(error) {
+      console.log('ERROR (Service Base): ', error);
+    });
   }
 
   async doPost(url, data) {
@@ -24,7 +22,7 @@ export default class DogeService {
         }
       })
       .catch(function(error) {
-        console.log(error);
+        console.log('ERROR (Service Base): ', error);
       });
   }
 }

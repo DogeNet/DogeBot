@@ -1,67 +1,46 @@
-import { apiPoints } from '../service/endpoints';
-
 module.exports = {
   name: 'users',
   description: 'Returns the server members',
-  execute(message, args, dogeService) {
-    if (args.length < 0 && args.length > 2) {
+  execute(message, args, doge) {
+    if (args.length <= 0 && args.length > 1) {
       return;
     }
 
-    let username = '';
-    let response = '```{0}```';
+    let command = args[0].toLowerCase();
+    let username = args[1];
+    let reply = '```{0}```';
 
-    switch (args[0].toLowerCase()) {
+    switch (command) {
       case 'list':
-        dogeService
-          .doGet(`${apiPoints.users}`)
-          .then(result => {
-            let strBuild = '';
-
-            if (result.data.users) {
-              let userArr = Object.entries(result.data.users);
-              userArr.forEach(u => {
-                strBuild += `> User: ${u[1].username} - Score: ${u[1].score}\n\n`;
-              });
-              message.channel.send(response.replace('{0}', strBuild));
-            }
+        doge.services.users
+          .getUserList()
+          .then(response => {
+            reply = reply.replace('{0}', response);
+            message.channel.send(reply);
           })
-          .catch(err => {
-            console.log('HELLO');
-            message.channel.send(err.toString());
-          });
+          .catch(error => console.log('ERROR (User Controller): ', error));
 
         break;
 
       case 'profile':
-        username = args[1];
-
-        dogeService
-          .doGet(`${apiPoints.users}`, username)
-          .then(result => {
-            if (result.data.user) {
-              let strBuild = $`> User: ${result.data.user.username} - Score: ${result.data.user.score}`;
-              message.channel.send(response.replace('{0}', strBuild));
-            }
+        doge.services.users
+          .getUserProfile(username)
+          .then(response => {
+            reply = reply.replace('{0}', response);
+            message.channel.send(reply);
           })
-          .catch(err => {
-            message.channel.send(err.toString());
-          });
+          .catch(error => console.log('ERROR (User Controller): ', error));
+
         break;
-      case 'create':
-        username = args[1];
-        let data = JSON.stringify({
-          username: username
-        });
 
-        dogeService
-          .doPost(`${apiPoints.users}`, data)
-          .then(result => {
-            message.channel.send($`User: <${username}> successfully created.`);
+      case 'create':
+        doge.services.users
+          .createUserProfile(username)
+          .then(response => {
+            reply = reply.replace('{0}', response);
+            message.channel.send(reply);
           })
-          .catch(err => {
-            message.channel.send(err.toString());
-          });
+          .catch(error => console.log('ERROR (User Controller): ', error));
         break;
 
       default:
