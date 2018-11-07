@@ -9,20 +9,24 @@ export default class BaseService {
     if (urlParam != null) {
       paramStr = `/${urlParam}`;
     }
-    return await axios.get(`${baseUrl}${url}${paramStr}`).catch(function(error) {
-      console.log('ERROR (Service Base): ', error);
+
+    return await new Promise((resolve, reject) => {
+      axios
+        .get(`${baseUrl}${url}${paramStr}`)
+        .then(response => resolve(response))
+        .catch(error => reject(error));
     });
   }
-
   async doPost(url, data) {
-    return await axios
-      .post(`${baseUrl}${url}`, data, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .catch(function(error) {
-        console.log('ERROR (Service Base): ', error);
-      });
+    return await new Promise((resolve, reject) => {
+      axios
+        .post(`${baseUrl}${url}`, data, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => resolve(response))
+        .catch(error => reject(error));
+    });
   }
 }
