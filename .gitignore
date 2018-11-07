@@ -66,3 +66,4 @@ src/service/endpoints.js
 /dist
 dist/bot.js
 dist/app.js
+dist/config.js

@@ -15,7 +15,9 @@ export default class UserService extends BaseService {
         }
       })
       .catch(err => {
-        return err.toString();
+        let errStr = `> There was an error processing your request, please try again.`;
+        console.log(err.toString());
+        return errStr;
       });
   };
 
@@ -28,7 +30,9 @@ export default class UserService extends BaseService {
         }
       })
       .catch(err => {
-        return err.toString();
+        let errStr = `> Username: <${username}> does not exist - please check case sensitivity.`;
+        console.log(err.toString());
+        return errStr;
       });
   };
 
@@ -42,7 +46,9 @@ export default class UserService extends BaseService {
         return strBuild;
       })
       .catch(err => {
-        response = err.toString();
+        let errStr = `> Username: <${username}> is invalid or already exists.`;
+        console.log(err.toString());
+        return errStr;
       });
   };
 }
