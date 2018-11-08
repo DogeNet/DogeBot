@@ -64,6 +64,17 @@ module.exports = {
               message.channel.send(processMessageIntoTemplate(`> Username: <${username}> invalid or does not exist.`));
               console.log(error);
             });
+        },
+        add: () => {
+          doge.services.users
+            .updateUserProfileAdd(username, score)
+            .then(response => {
+              message.channel.send(processMessageIntoTemplate(response));
+            })
+            .catch(error => {
+              message.channel.send(processMessageIntoTemplate(`> Username: <${username}> invalid or does not exist.`));
+              console.log(error);
+            });
         }
       };
       return services[command]();

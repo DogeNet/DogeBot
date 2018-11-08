@@ -59,12 +59,27 @@ export default class UserService extends BaseService {
     })
     return await new Promise((resolve, reject) => {
       this.api
-        .patch(`${(apiPoints.users.patch).replace('{0}', username)}`, data)
+        .patch(`${(apiPoints.users.patchUpdate).replace('{0}', username)}`, data)
         .then(response => {
           let strBuild = `> User: <${username}> successfully updated.`;
           resolve(strBuild);
         })
         .catch(error => reject(error));
     });
+  }
+
+    async updateUserProfileAdd(username, score){
+      let data = JSON.stringify({
+        score: score
+      })
+      return await new Promise((resolve, reject) => {
+        this.api
+          .patch(`${(apiPoints.users.patchAdd).replace('{0}', username)}`, data)
+          .then(response => {
+            let strBuild = `> User: <${username}> successfully updated.`;
+            resolve(strBuild);
+          })
+          .catch(error => reject(error));
+      });
   }
 }
