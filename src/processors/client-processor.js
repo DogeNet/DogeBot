@@ -4,7 +4,6 @@ import fs from 'fs';
 const processClient = token => {
   const client = new Discord.Client();
   processControllers(client);
-  // Initialise DogeBot using config token
   client.login(token).catch(error => console.log(`Failed: ${error}`));
 
   return client;

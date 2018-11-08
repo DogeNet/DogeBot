@@ -1,54 +1,55 @@
-import BaseService from './service-base';
+import BaseService from './base-service';
 import { apiPoints } from './endpoints';
 
 export default class UserService extends BaseService {
-  getUserList = async () => {
+  constructor() {
+    super();
+  }
+
+  async getUserProfile(username) {
     return await new Promise((resolve, reject) => {
-      this.doGet(apiPoints.users)
-        .then(result => {
+      this.api
+        .get(`${apiPoints.users}/${username}`)
+        .then(response => {
+          if (response.data.user) {
+            let strBuild = `> User: ${response.data.user.username} - Score: ${response.data.user.score}`;
+            resolve(strBuild);
+          }
+        })
+        .catch(error => reject(error));
+    });
+  }
+
+  async getUserList() {
+    return await new Promise((resolve, reject) => {
+      this.api
+        .get(`${apiPoints.users}`)
+        .then(response => {
           let strBuild = '';
-          if (result.data.users) {
-            let userArr = Object.entries(result.data.users);
+          if (response.data.users) {
+            let userArr = Object.entries(response.data.users);
             userArr.forEach(u => {
               strBuild += `> User: ${u[1].username} - Score: ${u[1].score}\n\n`;
             });
             resolve(strBuild);
           }
         })
-        .catch(err => {
-          reject(err.toString());
-        });
+        .catch(error => reject(error));
     });
-  };
+  }
 
-  getUserProfile = async username => {
-    return await new Promise((resolve, reject) => {
-      this.doGet(apiPoints.users, username)
-        .then(result => {
-          if (result.data.user) {
-            let strBuild = `> User: ${result.data.user.username} - Score: ${result.data.user.score}`;
-            resolve(strBuild);
-          }
-        })
-        .catch(err => {
-          reject(err.toString());
-        });
-    });
-  };
-
-  createUserProfile = async username => {
+  async createUserProfile(username) {
     let data = JSON.stringify({
       username: username
     });
     return await new Promise((resolve, reject) => {
-      this.doPost(`${apiPoints.users}`, data)
-        .then(result => {
+      this.api
+        .post(`${apiPoints.users}`, data)
+        .then(response => {
           let strBuild = `> User: <${username}> successfully created.`;
           resolve(strBuild);
         })
-        .catch(err => {
-          reject(err.toString());
-        });
+        .catch(error => reject(error));
     });
-  };
+  }
 }

@@ -1,10 +1,7 @@
-// Setup modules required for DogeBot
 import { DogeBot } from './bot';
 
-// Instantiate client and process controller files to be used later on with commands
 const doge = new DogeBot();
 
-// The ready event - once triggered the bot is then operational for use
 doge.client.on('ready', () => {
   console.log('DogeBot, operational.');
 });
@@ -15,6 +12,6 @@ doge.client.on('message', message => {
   if (response === null) return;
 
   let { controller, msgProcessed, msgArgs } = response;
-  // Execute the required controller passing in the user message
+
   controller.execute(msgProcessed, msgArgs, doge);
 });
