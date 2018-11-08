@@ -9,7 +9,7 @@ export default class UserService extends BaseService {
   async getUserProfile(username) {
     return await new Promise((resolve, reject) => {
       this.api
-        .get(`${apiPoints.users}/${username}`)
+        .get(`${apiPoints.users.get}/${username}`)
         .then(response => {
           if (response.data.user) {
             let strBuild = `> User: ${response.data.user.username} - Score: ${response.data.user.score}`;
@@ -23,7 +23,7 @@ export default class UserService extends BaseService {
   async getUserList() {
     return await new Promise((resolve, reject) => {
       this.api
-        .get(`${apiPoints.users}`)
+        .get(`${apiPoints.users.get}`)
         .then(response => {
           let strBuild = '';
           if (response.data.users) {
@@ -44,9 +44,24 @@ export default class UserService extends BaseService {
     });
     return await new Promise((resolve, reject) => {
       this.api
-        .post(`${apiPoints.users}`, data)
+        .post(`${apiPoints.users.post}`, data)
         .then(response => {
           let strBuild = `> User: <${username}> successfully created.`;
+          resolve(strBuild);
+        })
+        .catch(error => reject(error));
+    });
+  }
+
+  async updateUserProfile(username, score){
+    let data = JSON.stringify({
+      score: score
+    })
+    return await new Promise((resolve, reject) => {
+      this.api
+        .patch(`${(apiPoints.users.patch).replace('{0}', username)}`, data)
+        .then(response => {
+          let strBuild = `> User: <${username}> successfully updated.`;
           resolve(strBuild);
         })
         .catch(error => reject(error));

@@ -9,6 +9,7 @@ module.exports = {
 
     let command = args[0].toLowerCase();
     let username = args[1];
+    let score = args[2];
 
     const runService = command => {
       let services = {
@@ -50,6 +51,17 @@ module.exports = {
             })
             .catch(error => {
               message.channel.send(processMessageIntoTemplate(`> Username: <${username}> already exists or is invalid.`));
+              console.log(error);
+            });
+        },
+        update: () => {
+          doge.services.users
+            .updateUserProfile(username, score)
+            .then(response => {
+              message.channel.send(processMessageIntoTemplate(response));
+            })
+            .catch(error => {
+              message.channel.send(processMessageIntoTemplate(`> Username: <${username}> invalid or does not exist.`));
               console.log(error);
             });
         }

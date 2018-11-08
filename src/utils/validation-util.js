@@ -9,7 +9,7 @@ const validateUserControllerParams = args => {
 };
 
 const validateUserControllerInput = args => {
-  if (args.length < 1 || args.length > 2) {
+  if (args.length < 1 || args.length > 3) {
     return false;
   }
   return true;
