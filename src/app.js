@@ -1,4 +1,5 @@
 import { DogeBot } from './bot';
+import { processMessageIntoTemplate } from './utils/message-utils';
 
 const doge = new DogeBot();
 
@@ -13,5 +14,15 @@ doge.client.on('message', message => {
 
   let { controller, msgProcessed, msgArgs } = response;
 
+  let validated = doge.cooldownManager.handler(message, controller, doge.cooldownManager.collection);
+
+  if (validated === false) return;
+
   controller.execute(msgProcessed, msgArgs, doge);
+});
+
+doge.client.on('guildMemberAdd', member => {
+  const channel = member.guild.channels.find('name', 'general');
+  if (!channel) return;
+  channel.send(processMessageIntoTemplate(`Wow, much potential, such failed dreams, ${member}.`));
 });

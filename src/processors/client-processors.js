@@ -19,4 +19,7 @@ const processControllers = client => {
   }
 };
 
-export { processClient };
+const returnSetCollection = () => {
+  return new Set();
+};
+export { processClient, returnSetCollection };

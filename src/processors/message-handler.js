@@ -6,7 +6,8 @@ const messageHandler = (client, message) => {
   let args = message.content.slice(config.prefix.length).split(' ');
   let controllerName = args.shift().toLowerCase();
   let controller =
-    client.controllers.get(controllerName) || client.controllers.find(ctr => ctr.aliases && ctr.aliases.includes(controllerName));
+    client.controllers.get(controllerName) ||
+    client.controllers.find(ctr => ctr.aliases && ctr.aliases.includes(controllerName));
 
   if (!controller) return null;
 
