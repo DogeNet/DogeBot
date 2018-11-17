@@ -1,5 +1,5 @@
 import { DogeBot } from './bot';
-import { processMessageIntoTemplate } from './utils/message-utils';
+import { processMessageIntoTemplate, getMessageScore } from './utils/message-utils';
 
 const doge = new DogeBot();
 
@@ -19,6 +19,8 @@ doge.client.on('message', message => {
   if (validated === false) return;
 
   controller.execute(msgProcessed, msgArgs, doge);
+  doge.services.users.updateUserProfileAdd(msgArgs[1], //Maybe a better way to reference or hold the username?
+    getMessageScore(msgProcessed));
 });
 
 doge.client.on('guildMemberAdd', member => {

@@ -1,5 +1,5 @@
 import { validateUserControllerInput, validateUserControllerParams } from '../utils/validation-util';
-import { processMessageIntoTemplate } from '../utils/message-utils';
+import { processMessageIntoTemplate, getMessageScore } from '../utils/message-utils';
 
 module.exports = {
   name: 'users',
@@ -10,6 +10,7 @@ module.exports = {
     let command = args[0].toLowerCase();
     let username = args[1];
     let score = args[2];
+    let commandBonus = 10; //default command bonus, should be configurable
 
     const runService = command => {
       let services = {
@@ -54,6 +55,9 @@ module.exports = {
               console.log(error);
             });
         },
+
+
+        //leaving these in but will a user be able to manually update their scores or should it just be done automatically
         update: () => {
           doge.services.users
             .updateUserProfile(username, score)
@@ -66,6 +70,7 @@ module.exports = {
             });
         },
         add: () => {
+          let score = getMessageScore(message, commandBonus);
           doge.services.users
             .updateUserProfileAdd(username, score)
             .then(response => {
